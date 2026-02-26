@@ -40,7 +40,7 @@ app.add_middleware(
 async def get_frontend():
     """Serve the frontend HTML file."""
     try:
-        with open("../frontend/index.html", "r", encoding="utf-8") as f:
+        with open("frontend/index.html", "r", encoding="utf-8") as f:
             return f.read()
     except FileNotFoundError:
         return """
