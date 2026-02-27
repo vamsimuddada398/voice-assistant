@@ -1,4 +1,5 @@
 import os
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.responses import HTMLResponse
@@ -24,7 +25,12 @@ load_dotenv()
 HF_TOKEN = os.getenv("HUGGINGFACE_API_KEY") or os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 # ---------------- APP ----------------
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    load_models()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 # -------- CORS -------- #
 app.add_middleware(
@@ -62,7 +68,6 @@ class QuestionRequest(BaseModel):
     question: str
 
 # ---------------- STARTUP ----------------
-@app.on_event("startup")
 def load_models():
     global llm, embeddings, vectorstore, retriever, rag_chain
 
