@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,7 +102,8 @@
             display: none;
         }
 
-        .browse-btn, .submit-btn {
+        .browse-btn,
+        .submit-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
@@ -113,12 +115,14 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .browse-btn:hover, .submit-btn:hover {
+        .browse-btn:hover,
+        .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .browse-btn:active, .submit-btn:active {
+        .browse-btn:active,
+        .submit-btn:active {
             transform: translateY(0);
         }
 
@@ -194,7 +198,7 @@
             background-clip: text;
         }
 
-        .main > p {
+        .main>p {
             color: #999;
             font-size: 16px;
             margin-bottom: 30px;
@@ -224,6 +228,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -342,7 +347,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .empty-state {
@@ -420,8 +427,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7); }
-            50% { box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(244, 67, 54, 0);
+            }
         }
 
         .voice-transcript {
@@ -445,8 +459,17 @@
         }
 
         @keyframes blink {
-            0%, 49%, 100% { opacity: 1; }
-            50%, 99% { opacity: 0.3; }
+
+            0%,
+            49%,
+            100% {
+                opacity: 1;
+            }
+
+            50%,
+            99% {
+                opacity: 0.3;
+            }
         }
 
         @media (max-width: 768px) {
@@ -468,6 +491,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Sidebar -->
@@ -524,22 +548,10 @@
             <div id="voiceTranscript" class="voice-transcript" style="display: none;"></div>
 
             <div class="input-area">
-                <input 
-                    type="text" 
-                    id="questionInput" 
-                    placeholder="Ask a question about your PDFs..." 
-                    disabled
-                    onkeypress="if(event.key === 'Enter') askQuestion()"
-                    style="display: block;"
-                />
+                <input type="text" id="questionInput" placeholder="Ask a question about your PDFs..." disabled
+                    onkeypress="if(event.key === 'Enter') askQuestion()" style="display: block;" />
                 <button id="askBtn" onclick="askQuestion()" disabled>Send</button>
-                <button 
-                    id="micBtn" 
-                    class="mic-button" 
-                    onclick="toggleMicrophone()" 
-                    disabled 
-                    style="display: none;"
-                >
+                <button id="micBtn" class="mic-button" onclick="toggleMicrophone()" disabled style="display: none;">
                     🎤 Start Listening
                 </button>
             </div>
@@ -660,7 +672,7 @@
         function switchMode(mode) {
             currentMode = mode;
             if (isListening) toggleMicrophone();
-            
+
             if (mode === 'text') {
                 textModeBtn.classList.add('active');
                 voiceModeBtn.classList.remove('active');
@@ -775,7 +787,7 @@
                         if (errJson && errJson.detail) {
                             errMsg = errJson.detail;
                         }
-                    } catch {}
+                    } catch { }
                     throw new Error(`Request failed: ${errMsg}`);
                 }
 
@@ -783,7 +795,7 @@
                 removeStatusMessage();
                 const answer = data.answer;
                 addMessage('assistant', answer);
-                
+
                 // Speak the response if in voice mode
                 if (currentMode === 'voice') {
                     speakResponse(answer);
@@ -861,7 +873,7 @@
 
         // Clear empty state when first message is added
         const originalAppendChild = chatContainer.appendChild;
-        chatContainer.appendChild = function(child) {
+        chatContainer.appendChild = function (child) {
             const emptyState = this.querySelector('.empty-state');
             if (emptyState && !child.querySelector?.('.empty-state')) {
                 emptyState.remove();
@@ -870,4 +882,5 @@
         };
     </script>
 </body>
+
 </html>

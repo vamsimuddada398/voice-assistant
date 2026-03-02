@@ -16,6 +16,7 @@ numpy
 pydantic
 python-dotenv
 pypdf
+pymupdf
 requests
 
 transformers
